@@ -10,13 +10,15 @@ Membuat container MySQL 8 di podman menggunakan fedora cockpit
 - Masuk menu podman container
 - Create container, isi field berikut
   - **Name** : mysql8
+  - **Owner** : User:ashoka
   - **Image** : docker.io/mysql/mysql-server
-  - **Command** : mysqld, with terminal
+  - **Command** : mysqld [tanpa terminal]
   - **Port mapping**:
-      host:9906 container 3306 tcp
+      - host:3306 container 3306 tcp
   - **Volume**:
-       - /home/ashoka/Apps/podman/mysql8/custom.cnf -> /etc/my.cnf.d/custom.cnf
-       - /home/ashoka/Apps/podman/mysql8/initdb -> /docker-entrypoint-initdb.d
+       - /home/ashoka/Apps/podman/mysql8/custom.cnf -> /etc/my.cnf.d/custom.cnf writable shared
+       - /home/ashoka/Apps/podman/mysql8/initdb -> /docker-entrypoint-initdb.d writable shared
+       - /home/ashoka/Apps/podman/mysql8/data -> /var/lib/mysql writable shared
 
 - Environment variabel:
   - MYSQL_ROOT_PASSWORD : lahacia
@@ -28,6 +30,7 @@ Membuat container MySQL 8 di podman menggunakan fedora cockpit
 .
 └── mysql8
     ├── custom.cnf
+    ├── data
     └── initdb
         └── grant.sql
 ```
