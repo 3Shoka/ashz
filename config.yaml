@@ -2,25 +2,25 @@ baseurl: https://ashz.xyz
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
-title: Example Site
+title: Ashz
 
 languages:
     id:
         languageName: Bahasa
-        title: Example Site
+        title: Ashz
         weight: 1
     en:
         languageName: English
-        title: Example Site
+        title: Ashz
         weight: 2
     zh-cn:
         languageName: 中文
-        title: 演示站点
+        title: Ashz
         weight: 3
     ar:
         languageName: عربي
         languagedirection: rtl
-        title: موقع تجريبي
+        title: Ashz
         weight: 4
 
 # Change it to your Disqus shortname before using
@@ -46,7 +46,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: /favicon.png
 
     footer:
         since: 2020
@@ -73,8 +73,8 @@ params:
             default: Licensed under CC BY-NC-SA 4.0
 
     comments:
-        enabled: false
-        provider: disqus
+        enabled: true
+        provider: utterances
 
         disqusjs:
             shortname:
@@ -84,9 +84,9 @@ params:
             adminLabel:
 
         utterances:
-            repo:
+            repo: 3Shoka/ashz
             issueTerm: pathname
-            label:
+            label: comment
 
         remark42:
             host:
@@ -168,10 +168,10 @@ params:
     opengraph:
         twitter:
             # Your Twitter username
-            site:
+            site: 3Shoka
 
             # Available values: summary, summary_large_image
-            card: summary_large_image
+            card: summary
 
     defaultImage:
         opengraph:
@@ -201,13 +201,13 @@ menu:
     social:
         - identifier: github
           name: GitHub
-          url: https://github.com/CaiJimmy/hugo-theme-stack
+          url: https://github.com/3Shoka
           params:
               icon: brand-github
 
         - identifier: twitter
           name: Twitter
-          url: https://twitter.com
+          url: https://twitter.com/3Shoka
           params:
               icon: brand-twitter
 
