@@ -1,10 +1,10 @@
 ---
 title: "Podman Mqtt Broker"
 date: 2022-04-20T13:14:51+07:00
+lastmod: 2022-04-21T10:13:00+07:00
 description: "Membuat MQTT Broker di podman menggunakan menggunakan fedora cockpit"
-categories: ["local env"]
+categories: ["local env", "iot"]
 tags: ["dev","container", "podman", "mqtt", "mosquitto"]
-toc: true
 ---
 
 Berikut ini langkah untuk membuat mqtt broker menggunakan eclipse mosquitto di podman
