@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mysql on Ashz</title><link>https://ashz.xyz/id/tags/mysql/</link><description>Recent content in mysql on Ashz</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Apr 2022 11:35:57 +0700</lastBuildDate><atom:link href="https://ashz.xyz/id/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>Podman Mysql 8</title><link>https://ashz.xyz/id/p/podman-mysql-8/</link><pubDate>Mon, 18 Apr 2022 11:35:57 +0700</pubDate><guid>https://ashz.xyz/id/p/podman-mysql-8/</guid><description>&lt;p>Membuat container MySQL 8 di podman menggunakan fedora cockpit&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Masuk menu podman container&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create container, isi field berikut&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Name&lt;/strong> : mysql8&lt;/li>
+&lt;li>&lt;strong>Owner&lt;/strong> : User:ashoka&lt;/li>
+&lt;li>&lt;strong>Image&lt;/strong> : docker.io/mysql/mysql-server&lt;/li>
+&lt;li>&lt;strong>Command&lt;/strong> : mysqld [tanpa terminal]&lt;/li>
+&lt;li>&lt;strong>Port mapping&lt;/strong>:
+&lt;ul>
+&lt;li>host:3306 container 3306 tcp&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Volume&lt;/strong>:
+&lt;ul>
+&lt;li>/home/ashoka/Apps/podman/mysql8/custom.cnf -&amp;gt; /etc/my.cnf.d/custom.cnf writable shared&lt;/li>
+&lt;li>/home/ashoka/Apps/podman/mysql8/initdb -&amp;gt; /docker-entrypoint-initdb.d writable shared&lt;/li>
+&lt;li>/home/ashoka/Apps/podman/mysql8/data -&amp;gt; /var/lib/mysql writable shared&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Environment variabel:&lt;/p>
+&lt;ul>
+&lt;li>MYSQL_ROOT_PASSWORD : lahacia&lt;/li>
+&lt;li>MYSQL_USER : ashoka&lt;/li>
+&lt;li>MYSQL_PASSWORD : haha&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Buat file dan folder berikut:&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── mysql8
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── custom.cnf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ├── data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── initdb
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └── grant.sql
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>file ~/A/podman►cat mysql8/custom.cnf&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[mysqld]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bind-address = 0.0.0.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>file ~/A/podman►cat mysql8/initdb/grant.sql&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">GRANT ALL PRIVILEGES ON *.* TO &amp;#39;ashoka&amp;#39;@&amp;#39;%&amp;#39; WITH GRANT OPTION;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>&lt;strong>Create and run&lt;/strong>&lt;/li>
+&lt;/ul></description></item></channel></rss>
