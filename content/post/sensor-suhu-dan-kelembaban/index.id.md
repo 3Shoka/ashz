@@ -4,7 +4,6 @@ date: 2022-04-20T21:13:17+07:00
 description: "Membuat sensor suhu dan kelembaban menggunakan ESP8266 dan DHT22"
 categories: ["iot"]
 tags: ["mqtt", "esp8266", "dht22", "tasmota"]
-draft: true
 ---
 
 Membuat rangkaian IOT untuk memonitoring suhu dan kelembaban tanpa perlu repot koding dan kompilasi kode.
