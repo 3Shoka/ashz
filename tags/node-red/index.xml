@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>node-red on Ashz</title><link>https://ashz.xyz/tags/node-red/</link><description>Recent content in node-red on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Tue, 19 Apr 2022 10:05:48 +0700</lastBuildDate><atom:link href="https://ashz.xyz/tags/node-red/index.xml" rel="self" type="application/rss+xml"/><item><title>Podman Node-RED</title><link>https://ashz.xyz/p/podman-node-red/</link><pubDate>Tue, 19 Apr 2022 10:05:48 +0700</pubDate><guid>https://ashz.xyz/p/podman-node-red/</guid><description>&lt;p>Membuat container Node-RED di podman menggunakan fedora cockpit&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>Masuk menu podman container&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Create container, isi field berikut&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Name&lt;/strong> : nodered&lt;/li>
+&lt;li>&lt;strong>Owner&lt;/strong> : User:ashoka&lt;/li>
+&lt;li>&lt;strong>Image&lt;/strong> : docker.io/nodered/node-red&lt;/li>
+&lt;li>&lt;strong>Command&lt;/strong> : bash [tanpa terminal]&lt;/li>
+&lt;li>&lt;strong>Port mapping&lt;/strong>:
+&lt;ul>
+&lt;li>host:1880, container:1880 tcp&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>Environment variabel:&lt;/p>
+&lt;ul>
+&lt;li>NODE_RED_CREDENTIAL_SECRET=nganu&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Create and run&lt;/strong>&lt;/p>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>
