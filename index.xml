@@ -1,4 +1,153 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ashz</title><link>https://ashz.xyz/</link><description>Recent content on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Wed, 06 Jul 2022 19:24:35 +0700</lastBuildDate><atom:link href="https://ashz.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Upgrade Portainer</title><link>https://ashz.xyz/p/upgrade-portainer/</link><pubDate>Wed, 06 Jul 2022 19:24:35 +0700</pubDate><guid>https://ashz.xyz/p/upgrade-portainer/</guid><description>&lt;p>Upgrade portainer dari versi 2.13.1 ke 2.14&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ashz</title><link>https://ashz.xyz/</link><description>Recent content on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Mon, 11 Jul 2022 11:27:34 +0700</lastBuildDate><atom:link href="https://ashz.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Membuat MQTT Broker</title><link>https://ashz.xyz/p/membuat-mqtt-broker/</link><pubDate>Mon, 11 Jul 2022 11:27:34 +0700</pubDate><guid>https://ashz.xyz/p/membuat-mqtt-broker/</guid><description>&lt;p>Kali ini saya akan membuat mqtt broker menggunakan Eclipse Mosquitto, selain gratis, setup nya juga gampang (setidaknya untuk kebutuhan sendiri). Mosquitto akan dijalankan di dalam container docker menggunakan aplikasi portainer. Portainer adalah aplikasi GUI berbasis web yang memudahkan untuk manajemen docker.&lt;/p>
+&lt;h2 id="persiapan-file-dan-direktori">Persiapan file dan direktori&lt;/h2>
+&lt;p>Container Mosquitto membutuhkan 3 folder untuk menyimpan konfigurasi, data dan log&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># perintah untuk membuat 3 folder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p mosquitto/&lt;span class="o">{&lt;/span>config,data,log&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Kemudian membuat file konfigurasi awal mosquitto&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># membuat file mosquitto.conf&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">vi mosquitto/config/mosquitto.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>isi file konfigurasi&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"># file mosquitto.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">allow_anonymous true # untuk konek ke broker tanpa menggunakan user &amp;amp; password
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">persistence true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">persistence_location /mosquitto/data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># simpan log ke dalam file
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log_dest file /mosquitto/log/mosquitto.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># menampilkan log ke stdout docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># log_dest stdout
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">listener 1883 # default port
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="konfigurasi-di-portainer">Konfigurasi di portainer&lt;/h2>
+&lt;p>Untuk membuat container di portainer, pilih menu Containers &amp;gt; Add container. Di halaman Create container isikan parameter berikut:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Name&lt;/strong>: mosquitto&lt;/li>
+&lt;li>&lt;strong>Image&lt;/strong>: eclipse-mosquitto&lt;/li>
+&lt;li>&lt;strong>Manual network port publishing&lt;/strong>:
+&lt;ul>
+&lt;li>&lt;strong>host&lt;/strong>: 1883 &amp;gt; &lt;strong>container&lt;/strong>: 1883, port untuk &lt;strong>host&lt;/strong> bisa menggunakan port acak, tidak harus sama 1883&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Command &amp;amp; logging&lt;/strong>:
+&lt;ul>
+&lt;li>&lt;strong>User&lt;/strong>: 1883, untuk user &lt;strong>mosquitto&lt;/strong> di dalam container&lt;/li>
+&lt;li>&lt;strong>Console&lt;/strong>: Interactive &amp;amp; TTY&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Volumes&lt;/strong>: container &amp;gt; host
+&lt;ul>
+&lt;li>/mosquitto/config/mosquitto.conf &amp;gt; /home/orangepi/mosquitto/config/mosquitto.conf&lt;/li>
+&lt;li>/mosquitto/data &amp;gt; /home/orangepi/mosquitto/data&lt;/li>
+&lt;li>/mosquitto/log &amp;gt; /home/orangepi/mosquitto/log&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Restart policy&lt;/strong>: Always&lt;/li>
+&lt;/ul>
+&lt;p>Setelah semua diisi, klik &lt;strong>Deploy the container&lt;/strong>. Setelah container sukses dibuat dan status running, Saatnya testing.&lt;/p>
+&lt;h2 id="test-koneksi-broker">Test koneksi broker&lt;/h2>
+&lt;p>Testing broker mqtt menggunakan aplikasi MQTT Explorer, isi parameter berikut:
+&lt;strong>Nama&lt;/strong>: mqtt broker, &lt;em>isi nama untuk koneksi&lt;/em>
+&lt;strong>Protocol&lt;/strong>: mqtt://
+&lt;strong>Host&lt;/strong>: 10.0.11.240, &lt;em>alamat IP broker&lt;/em>
+&lt;strong>Port&lt;/strong>: 1883, &lt;em>port listener mosquitto, sesuaikan dengan setting port host&lt;/em>
+Username dan password, sementara dikosongkan
+Klik &lt;strong>Save&lt;/strong> dan &lt;strong>Connect&lt;/strong>&lt;/p>
+&lt;p>Jika koneksi berhasil, akan muncul tampilan explore mqtt broker, dan di log mosquitto mucul log baru :&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">1657180721: New client connected from 10.0.11.240:56026 as mqtt-explorer-0261386d (p2, c1, k60).
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Untuk cek log, jalankan perintah &lt;code>sudo tail -f mosquitto/log/mosquitto.log&lt;/code>. Jika file konfigurasi &lt;em>log_dest&lt;/em> di set &lt;em>stdout&lt;/em>, untuk cek log &lt;code>docker logs -f mosquitto&lt;/code>&lt;/p>
+&lt;h2 id="menambahkan-user-untuk-akses-broker">Menambahkan user untuk akses broker&lt;/h2>
+&lt;p>Sangat penting untuk setting akun untuk otentikasi, agar tidak sembarang pengguna bisa mengakses mqtt broker.&lt;/p>
+&lt;h3 id="membuat-password-file">Membuat password file&lt;/h3>
+&lt;p>Untuk membuat password file gunakan perintah &lt;code>mosquito_passwd&lt;/code>, perintah lengkapnya sebagai berikut &lt;code>mosquitto_passwd -c &amp;lt;password file&amp;gt; &amp;lt;username&amp;gt;&lt;/code>, parameter &lt;code>-c&lt;/code> untuk membuat file baru. Karena saya membuat mosquitto di dalam docker container, jadi untuk menjalankan &lt;code>mosquitto_passwd&lt;/code> harus diawali dengan perintah &lt;em>docker exec&lt;/em>, &lt;code>docker exec -it &amp;lt;nama container&amp;gt; &amp;lt;perintah&amp;gt;&lt;/code>&lt;/p>
+&lt;p>Perintah lengkap :&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># eksekusi perintah untuk membuat user mosquitto&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker &lt;span class="nb">exec&lt;/span> -it mosquitto mosquitto_passwd -c /mosquitto/config/passwd ashoka
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Setelah menjalankan perintah diatas maka akan muncul prompt untuk memasukkan password, ketik password kemudian enter dan ulangi password untuk konfirmasi.&lt;/p>
+&lt;p>Untuk cek file hasil dari perintah diatas, jalankan perintah&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># melihat isi file passwd&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker &lt;span class="nb">exec&lt;/span> -it mosquitto cat /mosquitto/config/passwd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>File akan berisi username dan password yang telah dienkripsi.&lt;/p>
+&lt;h3 id="update-file-config">Update file config&lt;/h3>
+&lt;p>Untuk menerapkan otentikasi pada broker, harus ditambahkan konfigurasi untuk memuat file password yang sudah dibuat tadi&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">#file: mosquitto/config/mosquitto.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">allow_anonymous true # biarkan anonim tetap true dulu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">persistence true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">persistence_location /mosquitto/data
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log_dest file /mosquitto/log/mosquitto.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">listener 1883
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">password_file /mosquitto/config/passwd # baris ini yang ditambahkan
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Setelah update file config, restart container mosquitto, kemudian test menggunakan MQTT explorer
+jika sudah berhasil test login mqtt explorer dengan username dan password yang baru dibuat,
+maka parameter file konfigurasi &lt;code>allow_anonymous true&lt;/code> perlu diubah menjadi &lt;code>allow_anonymous false&lt;/code> agar tidak sembarang orang bisa mengakses broker mosquitto.&lt;/p></description></item><item><title>Upgrade Portainer</title><link>https://ashz.xyz/p/upgrade-portainer/</link><pubDate>Wed, 06 Jul 2022 19:24:35 +0700</pubDate><guid>https://ashz.xyz/p/upgrade-portainer/</guid><description>&lt;p>Upgrade portainer dari versi 2.13.1 ke 2.14&lt;/p>
 &lt;h2 id="proses-backup-setting">Proses backup setting&lt;/h2>
 &lt;p>Sebelum melakukan ugrade alangkah baiknya melakukan proses backup terlebih dahulu, agar jika terjadi kesalahan kita dapat melakukan restore ke setting sebelumnya.&lt;/p>
 &lt;p>Untuk melakukan backup lakukan perintah berikut:&lt;/p>
