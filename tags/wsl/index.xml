@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>wsl on Ashz</title><link>https://ashz.xyz/tags/wsl/</link><description>Recent content in wsl on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Sun, 17 Jul 2022 09:10:05 +0700</lastBuildDate><atom:link href="https://ashz.xyz/tags/wsl/index.xml" rel="self" type="application/rss+xml"/><item><title>Menghubungkan USB ke WSL2</title><link>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</link><pubDate>Sun, 17 Jul 2022 09:10:05 +0700</pubDate><guid>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</guid><description>&lt;p>Saya setiap harinya menggunakan laptop dengan sistem operasi linux. Namun kadang menggunakan PC dirumah yang menggunakan OS Windows, tapi juga saya pasang WSL2 karena sudah terbiasa dengan lingkungan linux, seperti untuk kebutuhan ssh dan lainnya. Suatu saat saya ingin menggunakan &lt;code>esptool&lt;/code> untuk flash firmware ESP8266 ataupun mau monitoring serial console nya di PC Windows, ketika saya pasang USB to Serial FTDI tidak muncul di list &lt;code>ls -l /dev/ttyUSB*&lt;/code> maupun &lt;code>lsusb&lt;/code> pada WSL2.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-wsl.png"
+width="670"
+height="100"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-wsl_hu21992abed2c78c1d3c7ab06425935471_9427_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-wsl_hu21992abed2c78c1d3c7ab06425935471_9427_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="menampilkan list usb di wsl"
+class="gallery-image"
+data-flex-grow="670"
+data-flex-basis="1608px"
+>&lt;/p>
+&lt;h2 id="install-usbipd">Install usbipd&lt;/h2>
+&lt;p>Kemudian saya cari cari apakah bisa USB TTL di Windows bisa diakses di WSL2, dan menemukan &lt;a class="link" href="https://github.com/dorssel/usbipd-win" target="_blank" rel="noopener"
+>usbipd-win&lt;/a>. Cara install nya gampang, buka Powershell sebagai Administrator, kemudian jalankan &lt;code>winget install usbipd&lt;/code>, proses instalasi akan langsung berjalan, pastikan koneksi internet stabil.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/install-usbipd.png"
+width="690"
+height="220"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/install-usbipd_hu77ee69f8ae92236efc6973692120518d_15411_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/install-usbipd_hu77ee69f8ae92236efc6973692120518d_15411_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="perintah dan proses instalasi usbipd"
+class="gallery-image"
+data-flex-grow="313"
+data-flex-basis="752px"
+>&lt;/p>
+&lt;p>Setelah proses install selesai, tutup window powershell dan buka lagi sebagai Administrator. Jalankan perintah &lt;code>usbipd&lt;/code> jika muncul tampilan berikut berarti usbipd sudah terinstall.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-usbipd.png"
+width="670"
+height="400"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-usbipd_hu358310fc756499ce70c4263a834b001d_21158_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-usbipd_hu358310fc756499ce70c4263a834b001d_21158_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="test menjalankan perintah usbipd"
+class="gallery-image"
+data-flex-grow="167"
+data-flex-basis="402px"
+>&lt;/p>
+&lt;h2 id="menggunakan-aplikasi-usbipd">Menggunakan aplikasi usbipd&lt;/h2>
+&lt;p>Dari gambar diatas sudah ditampilkan dengan jelas daftar perintah juga keterangan dari perintah tersebut&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/menampilkan-usb-terhubung.png"
+width="670"
+height="180"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/menampilkan-usb-terhubung_hu32a8df10498ac819360c25e7533ff62e_11336_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/menampilkan-usb-terhubung_hu32a8df10498ac819360c25e7533ff62e_11336_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="menampilkan daftar usb yang terhubung ke PC"
+class="gallery-image"
+data-flex-grow="372"
+data-flex-basis="893px"
+>&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/usb-wsl.png"
+width="670"
+height="119"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/usb-wsl_hu6a40ee87782c9b6220980f3b521a0995_10074_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/usb-wsl_hu6a40ee87782c9b6220980f3b521a0995_10074_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="menampilkan daftar usb yang terhubung ke WSL"
+class="gallery-image"
+data-flex-grow="563"
+data-flex-basis="1351px"
+>&lt;/p>
+&lt;p>Perhatikan pada bagian perangkat USB Serial Converter, dari kedua perintah diatas menampilkan status usb nya &lt;strong>Not shared&lt;/strong> dan &lt;strong>Not attached&lt;/strong> ini menandakan USB serialnya belum terhubung ke WSL. Untuk menghubungkan USB Serial Converter agar bisa diakses melalui WSL, jalankan perintah &lt;code>usbipd wsl attach -b &amp;lt;BUSID&amp;gt;&lt;/code>. BUSID adalah Bus ID yang ditampilkan pada list perangkat, untuk kasus ini USB Serial memiliki Bus ID &lt;code>5-3&lt;/code>.&lt;/p>
+&lt;h2 id="error-attach">Error attach&lt;/h2>
+&lt;p>Jika terjadi error ketika menjalankan perintah attash, seperti error birikut ini:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-powershell" data-lang="powershell">&lt;span class="line">&lt;span class="cl">&lt;span class="n">usbipd&lt;/span>&lt;span class="err">:&lt;/span> &lt;span class="n">error&lt;/span>&lt;span class="err">:&lt;/span> &lt;span class="n">WSL&lt;/span> &lt;span class="s1">&amp;#39;usbip&amp;#39;&lt;/span> &lt;span class="n">client&lt;/span> &lt;span class="n">not&lt;/span> &lt;span class="n">correctly&lt;/span> &lt;span class="n">installed&lt;/span>&lt;span class="p">.&lt;/span> &lt;span class="n">See&lt;/span> &lt;span class="n">https&lt;/span>&lt;span class="err">:&lt;/span>&lt;span class="p">//&lt;/span>&lt;span class="n">github&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="n">dorssel&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="nb">usbipd-win&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="n">wiki&lt;/span>&lt;span class="p">/&lt;/span>&lt;span class="nb">WSL-support&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="n">the&lt;/span> &lt;span class="n">latest&lt;/span> &lt;span class="n">instructions&lt;/span>&lt;span class="p">.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Solusinya sudah ditunjukan pada keterangan errornya, kunjungi link yang tertera, ikuti petunjuk selanjutnya. Kurang lebih jalankan perintah seperti dibawah ini:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># jalankan perintah ini di WSL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install linux-tools-virtual hwdata
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo update-alternatives --install /usr/local/bin/usbip usbip &lt;span class="sb">`&lt;/span>ls /usr/lib/linux-tools/*/usbip &lt;span class="p">|&lt;/span> tail -n1&lt;span class="sb">`&lt;/span> &lt;span class="m">20&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Setelah sukses menjalankan perintah diatas, jalankan lagi perintah &lt;code>usbipd wsl attach -b 5-3&lt;/code> di Powershell. Status USB Serial sudah &lt;strong>Attached&lt;/strong>.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-attach.png"
+width="730"
+height="290"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-attach_hu9c83728ba38e3baa1e57fbba4025b1bf_20731_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/perintah-attach_hu9c83728ba38e3baa1e57fbba4025b1bf_20731_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="perintah attach untuk menghubungkan usb ke wsl"
+class="gallery-image"
+data-flex-grow="251"
+data-flex-basis="604px"
+>&lt;/p>
+&lt;h2 id="cek-list-usb-wsl">Cek list usb wsl&lt;/h2>
+&lt;p>Jika usb sudah di hubungkan menggunakan aplikasi &lt;code>usbipd&lt;/code>, kemudian tes dari sisi WSL apakah USB Serial sudah terdeteksi.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-setelah-terhubung.png"
+width="810"
+height="110"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-setelah-terhubung_huf4efd9fed3b90c4f0c629277d2bf7d89_14434_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-setelah-terhubung_huf4efd9fed3b90c4f0c629277d2bf7d89_14434_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="melihat list usb yang terhubung ke wsl"
+class="gallery-image"
+data-flex-grow="736"
+data-flex-basis="1767px"
+>&lt;/p>
+&lt;h2 id="test-monitoring-serial-console-esp01">Test monitoring serial console ESP01&lt;/h2>
+&lt;p>Setelah menghubungkan ESP01 dengan FTDI Serial dan sudah terdeteksi oleh WSL, saatnya tes monitoring serial console ESP01 melalui terminal pada WSL. Untuk monitoring serial console ini saya menggunakan aplikasi &lt;code>screen&lt;/code>, dan sebagai catatan &lt;code>/dev/ttyUSB*&lt;/code> pada WSL owner dan group nya adalah &lt;code>root&lt;/code>, maka untuk menjalankan perintah screen harus diawali dengan sudo.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># /dev/ttyUSB0 adalah lokasi device usb serial&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 115200 adalah baudrate, nilai bisa disesuaikan&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo screen /dev/ttyUSB0 &lt;span class="m">115200&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Setelah menjalankan perintah diatas tampilan akan blank, tunggu beberapa saat akan muncul log serial console. Jika tidak muncul apapun lakukan perintah reset pada device. Jika muncul log tampilan karakter tidak jelas, kemungkinan perlu merubah nilai baudrate.&lt;/p>
+&lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/serial-console.png"
+width="810"
+height="142"
+srcset="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/serial-console_hubdd1d07800127fa7f67f235d9b640cde_12231_480x0_resize_box_3.png 480w, https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/serial-console_hubdd1d07800127fa7f67f235d9b640cde_12231_1024x0_resize_box_3.png 1024w"
+loading="lazy"
+alt="tampilan log serial console ESP01"
+class="gallery-image"
+data-flex-grow="570"
+data-flex-basis="1369px"
+>&lt;/p></description></item></channel></rss>
