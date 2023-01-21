@@ -1,4 +1,31 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ashz</title><link>https://ashz.xyz/</link><description>Recent content on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Sun, 17 Jul 2022 09:10:05 +0700</lastBuildDate><atom:link href="https://ashz.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Menghubungkan USB ke WSL2</title><link>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</link><pubDate>Sun, 17 Jul 2022 09:10:05 +0700</pubDate><guid>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</guid><description>&lt;p>Saya setiap harinya menggunakan laptop dengan sistem operasi linux. Namun kadang menggunakan PC dirumah yang menggunakan OS Windows, tapi juga saya pasang WSL2 karena sudah terbiasa dengan lingkungan linux, seperti untuk kebutuhan ssh dan lainnya. Suatu saat saya ingin menggunakan &lt;code>esptool&lt;/code> untuk flash firmware ESP8266 ataupun mau monitoring serial console nya di PC Windows, ketika saya pasang USB to Serial FTDI tidak muncul di list &lt;code>ls -l /dev/ttyUSB*&lt;/code> maupun &lt;code>lsusb&lt;/code> pada WSL2.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ashz</title><link>https://ashz.xyz/</link><description>Recent content on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Sat, 21 Jan 2023 01:40:27 +0000</lastBuildDate><atom:link href="https://ashz.xyz/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Blog Ini</title><link>https://ashz.xyz/p/setup-blog-ini/</link><pubDate>Sat, 21 Jan 2023 01:40:27 +0000</pubDate><guid>https://ashz.xyz/p/setup-blog-ini/</guid><description>&lt;p>Setup ini biasanya dilakukan setiap setelah install ulang pc, ganti pc atau mau update blog di perangkat baru yang belum ada skrip blog ini.&lt;/p>
+&lt;h2 id="clone-repo">Clone repo&lt;/h2>
+&lt;p>Jalankan perintah
+&lt;code>git clone git@github.com:3Shoka/ashz.git&lt;/code>&lt;/p>
+&lt;p>Pindah ke direktori
+&lt;code>cd ashz&lt;/code>&lt;/p>
+&lt;h2 id="install-hugo">Install hugo&lt;/h2>
+&lt;p>Sumber refrensi: &lt;a class="link" href="https://gohugo.io/installation/linux/" target="_blank" rel="noopener"
+>https://gohugo.io/installation/linux/&lt;/a>&lt;/p>
+&lt;p>Jalankan perintah &lt;code>sudo apt install hugo&lt;/code>&lt;/p>
+&lt;p>Cek versi hugo
+&lt;code>hugo version&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># respon dari cek versi hugo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hugo v0.92.2+extended linux/arm64 &lt;span class="nv">BuildDate&lt;/span>&lt;span class="o">=&lt;/span>2022-02-23T16:47:50Z &lt;span class="nv">VendorInfo&lt;/span>&lt;span class="o">=&lt;/span>ubuntu:0.92.2-1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="update-submodule">Update submodule&lt;/h2>
+&lt;p>Perintah ini digunakan untuk clone theme Stack yang ditambahkan menggunakan git submodule&lt;/p>
+&lt;p>&lt;code>git submodule update --init&lt;/code>&lt;/p>
+&lt;h2 id="jalankan-server">Jalankan server&lt;/h2>
+&lt;p>&lt;code>hugo server&lt;/code>&lt;/p>
+&lt;p>Setup selesai, selanjutnya tinggal update blog dengan menambah halaman atau postingan.&lt;/p></description></item><item><title>Menghubungkan USB ke WSL2</title><link>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</link><pubDate>Sun, 17 Jul 2022 09:10:05 +0700</pubDate><guid>https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/</guid><description>&lt;p>Saya setiap harinya menggunakan laptop dengan sistem operasi linux. Namun kadang menggunakan PC dirumah yang menggunakan OS Windows, tapi juga saya pasang WSL2 karena sudah terbiasa dengan lingkungan linux, seperti untuk kebutuhan ssh dan lainnya. Suatu saat saya ingin menggunakan &lt;code>esptool&lt;/code> untuk flash firmware ESP8266 ataupun mau monitoring serial console nya di PC Windows, ketika saya pasang USB to Serial FTDI tidak muncul di list &lt;code>ls -l /dev/ttyUSB*&lt;/code> maupun &lt;code>lsusb&lt;/code> pada WSL2.&lt;/p>
 &lt;p>&lt;img src="https://ashz.xyz/p/menghubungkan-usb-ke-wsl2/list-usb-wsl.png"
 width="670"
 height="100"
