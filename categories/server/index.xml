@@ -1,4 +1,152 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>server on Ashz</title><link>https://ashz.xyz/categories/server/</link><description>Recent content in server on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Mon, 11 Jul 2022 11:27:34 +0700</lastBuildDate><atom:link href="https://ashz.xyz/categories/server/index.xml" rel="self" type="application/rss+xml"/><item><title>Membuat MQTT Broker</title><link>https://ashz.xyz/p/membuat-mqtt-broker/</link><pubDate>Mon, 11 Jul 2022 11:27:34 +0700</pubDate><guid>https://ashz.xyz/p/membuat-mqtt-broker/</guid><description>&lt;p>Kali ini saya akan membuat mqtt broker menggunakan Eclipse Mosquitto, selain gratis, setup nya juga gampang (setidaknya untuk kebutuhan sendiri). Mosquitto akan dijalankan di dalam container docker menggunakan aplikasi portainer. Portainer adalah aplikasi GUI berbasis web yang memudahkan untuk manajemen docker.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>server on Ashz</title><link>https://ashz.xyz/categories/server/</link><description>Recent content in server on Ashz</description><generator>Hugo -- gohugo.io</generator><language>id-id</language><lastBuildDate>Sun, 26 Feb 2023 00:27:42 +0000</lastBuildDate><atom:link href="https://ashz.xyz/categories/server/index.xml" rel="self" type="application/rss+xml"/><item><title>Custom SSL Domain</title><link>https://ashz.xyz/p/custom-ssl-domain/</link><pubDate>Sun, 26 Feb 2023 00:27:42 +0000</pubDate><guid>https://ashz.xyz/p/custom-ssl-domain/</guid><description>&lt;p>Cara membuat custom sertifikat ssl untuk domain lokal sehingga bisa mengakses domain lokal dengan https tanpa ada warning dari browser.
+Sertifikat yang akan dibuat adalah untuk domain dan IP berikut:&lt;/p>
+&lt;ul>
+&lt;li>Domain: ashok.lan (domain untuk jaringan lokal)&lt;/li>
+&lt;li>IP: 10.0.11.240 (IP lokal juga)&lt;/li>
+&lt;/ul>
+&lt;h2 id="generate-certificate-authority-ca">Generate Certificate Authority (CA)&lt;/h2>
+&lt;p>Certificate Authority (CA) adalah organisasi yang melakukan verifikasi terhadap sertifikat digital.&lt;/p>
+&lt;ul>
+&lt;li>Generate RSA key&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl genrsa -aes256 -out ca-key.pem 4096&lt;/code>
+masukkan pass phrase: &lt;code>xxx&lt;/code>, akan menghasilkan file &lt;code>ca-key.pem&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>generate public CA cert&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl req -new -x509 -sha256 -days 365 -key ca-key.pem -out ca.pem&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># output command&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Enter pass phrase &lt;span class="k">for&lt;/span> ca-key.pem:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You are about to be asked to enter information that will be incorporated
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">into your certificate request.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">What you are about to enter is what is called a Distinguished Name or a DN.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">There are quite a few fields but you can leave some blank
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">For some fields there will be a default value,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If you enter &lt;span class="s1">&amp;#39;.&amp;#39;&lt;/span>, the field will be left blank.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Country Name &lt;span class="o">(&lt;/span>&lt;span class="m">2&lt;/span> letter code&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>AU&lt;span class="o">]&lt;/span>:ID
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">State or Province Name &lt;span class="o">(&lt;/span>full name&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>Some-State&lt;span class="o">]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Locality Name &lt;span class="o">(&lt;/span>eg, city&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Organization Name &lt;span class="o">(&lt;/span>eg, company&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>Internet Widgits Pty Ltd&lt;span class="o">]&lt;/span>:Ashz Inc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Organizational Unit Name &lt;span class="o">(&lt;/span>eg, section&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Common Name &lt;span class="o">(&lt;/span>e.g. server FQDN or YOUR name&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:Ashz
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Email Address &lt;span class="o">[]&lt;/span>:xxx@ashz.xyz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>akan menghasilkan file &lt;code>ca.pem&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>opsional, melihat konten sertifikat&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl x509 -in ca.pem -text&lt;/code>&lt;/p>
+&lt;h2 id="generate-sertifikat">Generate sertifikat&lt;/h2>
+&lt;ul>
+&lt;li>membuat rsa key&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl genrsa -out cert-key.pem 4096&lt;/code>
+akan menghasilkan file &lt;code>cert-key.pem&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>membuat Sertificate Signing Request (CSR)&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl req -new -sha256 -key cert-key.pem -out cert.csr&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># output command&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">You are about to be asked to enter information that will be incorporated
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">into your certificate request.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">What you are about to enter is what is called a Distinguished Name or a DN.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">There are quite a few fields but you can leave some blank
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">For some fields there will be a default value,
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">If you enter &lt;span class="s1">&amp;#39;.&amp;#39;&lt;/span>, the field will be left blank.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-----
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Country Name &lt;span class="o">(&lt;/span>&lt;span class="m">2&lt;/span> letter code&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>AU&lt;span class="o">]&lt;/span>:ID
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">State or Province Name &lt;span class="o">(&lt;/span>full name&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>Some-State&lt;span class="o">]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Locality Name &lt;span class="o">(&lt;/span>eg, city&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Organization Name &lt;span class="o">(&lt;/span>eg, company&lt;span class="o">)&lt;/span> &lt;span class="o">[&lt;/span>Internet Widgits Pty Ltd&lt;span class="o">]&lt;/span>:Ashz Inc.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Organizational Unit Name &lt;span class="o">(&lt;/span>eg, section&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Common Name &lt;span class="o">(&lt;/span>e.g. server FQDN or YOUR name&lt;span class="o">)&lt;/span> &lt;span class="o">[]&lt;/span>:Ashok
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Email Address &lt;span class="o">[]&lt;/span>:xxx@ashok.lan
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Please enter the following &lt;span class="s1">&amp;#39;extra&amp;#39;&lt;/span> attributes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">to be sent with your certificate request
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">A challenge password &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">An optional company name &lt;span class="o">[]&lt;/span>:
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>menghasilkan file &lt;code>cert.csr&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>membuat file untuk altName&lt;/li>
+&lt;/ul>
+&lt;p>disini saya membuat domain wildcard untuk *.ashok.lan dan menambahkan IP, agar IP dan semua subdomain tersebut dapat diakses menggunakan https tanpa ada warning dari browser.&lt;/p>
+&lt;p>&lt;code>echo &amp;quot;subjectAltName=DNS:*.ashok.lan,IP:10.0.11.244&amp;quot; &amp;gt; extfile.cnf&lt;/code>&lt;/p>
+&lt;p>menghasilkan file &lt;code>extfile.cnf&lt;/code>&lt;/p>
+&lt;ul>
+&lt;li>membuat sertifikat&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>openssl x509 -req -sha256 -days 365 -in cert.csr -CA ca.pem -CAkey ca-key.pem -out cert.pem -extfile extfile.cnf -CAcreateserial&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># output command&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Certificate request self-signature ok
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">subject&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">C&lt;/span> &lt;span class="o">=&lt;/span> ID, &lt;span class="nv">ST&lt;/span> &lt;span class="o">=&lt;/span> Some-State, &lt;span class="nv">O&lt;/span> &lt;span class="o">=&lt;/span> Ashz Inc., &lt;span class="nv">CN&lt;/span> &lt;span class="o">=&lt;/span> Ashok, &lt;span class="nv">emailAddress&lt;/span> &lt;span class="o">=&lt;/span> xxx@ashok.lan
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Enter pass phrase &lt;span class="k">for&lt;/span> ca-key.pem:
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>masukkan pass phrase CA, kemudian enter
+menghasilkan file &lt;code>cert.pem&lt;/code>&lt;/p>
+&lt;p>Selanjutnya install &lt;code>ca.pem&lt;/code> pada perangkat yang akan mengakses domain *.ashok.lan dan gunakan file &lt;code>cert-key.pem&lt;/code> dan &lt;code>cert.pem&lt;/code> untuk setting ssl domain dan subdomain ashok.lan&lt;/p>
+&lt;p>sumber refrensi:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://github.com/ChristianLempa/cheat-sheets/blob/main/misc/ssl-certs.md" target="_blank" rel="noopener"
+>ChristianLempa&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Membuat MQTT Broker</title><link>https://ashz.xyz/p/membuat-mqtt-broker/</link><pubDate>Mon, 11 Jul 2022 11:27:34 +0700</pubDate><guid>https://ashz.xyz/p/membuat-mqtt-broker/</guid><description>&lt;p>Kali ini saya akan membuat mqtt broker menggunakan Eclipse Mosquitto, selain gratis, setup nya juga gampang (setidaknya untuk kebutuhan sendiri). Mosquitto akan dijalankan di dalam container docker menggunakan aplikasi portainer. Portainer adalah aplikasi GUI berbasis web yang memudahkan untuk manajemen docker.&lt;/p>
 &lt;h2 id="persiapan-file-dan-direktori">Persiapan file dan direktori&lt;/h2>
 &lt;p>Container Mosquitto membutuhkan 3 folder untuk menyimpan konfigurasi, data dan log&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
